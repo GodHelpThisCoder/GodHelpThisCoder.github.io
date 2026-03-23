@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shawn M. Sorrell — Applied AI Engineer</title>
+<meta name="description" content="Applied AI engineer who shipped 8 production systems inside a legacy enterprise with no engineering team — then developed a methodology for making agent-driven engineering reliable and auditable.">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0d1117;
+  --bg-surface: #161b22;
+  --text: #e6edf3;
+  --text-muted: #8b949e;
+  --accent: #58a6ff;
+  --border: #21262d;
+  --mono: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  --nav-h: 48px;
+}
+
+html { scroll-behavior: smooth; scroll-padding-top: calc(var(--nav-h) + 24px); }
+
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ── Nav ── */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--nav-h);
+  background: rgba(13, 17, 23, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  padding: 0 16px;
+}
+nav a {
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  transition: color 0.15s;
+}
+nav a:hover { color: var(--text); text-decoration: none; }
+
+/* ── Layout ── */
+.container {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+section {
+  padding: 64px 0;
+  border-bottom: 1px solid var(--border);
+}
+section:last-of-type { border-bottom: none; }
+
+/* ── Header / Hero ── */
+.hero {
+  padding-top: calc(var(--nav-h) + 80px);
+  padding-bottom: 64px;
+  border-bottom: 1px solid var(--border);
+}
+.hero h1 {
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 4px;
+}
+.hero .title {
+  font-family: var(--mono);
+  font-size: 15px;
+  color: var(--accent);
+  margin-bottom: 20px;
+}
+.hero .positioning {
+  color: var(--text-muted);
+  font-size: 15px;
+  line-height: 1.7;
+  max-width: 600px;
+  margin-bottom: 24px;
+}
+.links {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  font-size: 14px;
+}
+.links a { display: flex; align-items: center; gap: 6px; }
+
+/* ── Section titles ── */
+h2 {
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin-bottom: 24px;
+  color: var(--text);
+}
+
+/* ── Methodology ── */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+  margin-bottom: 32px;
+}
+.stat {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 14px 16px;
+}
+.stat .num {
+  font-family: var(--mono);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--accent);
+  display: block;
+  margin-bottom: 2px;
+}
+.stat .label {
+  font-size: 12px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.method-item {
+  margin-bottom: 20px;
+}
+.method-item h3 {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+.method-item h3 code {
+  font-family: var(--mono);
+  font-size: 13px;
+  background: var(--bg-surface);
+  padding: 2px 6px;
+  border-radius: 3px;
+  border: 1px solid var(--border);
+  font-weight: 400;
+}
+.method-item p {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.65;
+}
+
+/* ── Systems ── */
+.system {
+  margin-bottom: 16px;
+}
+.system h3 {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+.system p {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+.system .tech {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* ── MCP / Open Source ── */
+.item-list {
+  list-style: none;
+}
+.item-list li {
+  margin-bottom: 14px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+.item-list li strong {
+  color: var(--text);
+  font-weight: 600;
+}
+.item-list li span {
+  color: var(--text-muted);
+}
+
+/* ── Stack ── */
+.stack-category {
+  margin-bottom: 16px;
+}
+.stack-category h3 {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+.pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.pill {
+  font-family: var(--mono);
+  font-size: 12px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 4px 10px;
+  color: var(--text-muted);
+}
+
+/* ── Footer ── */
+footer {
+  padding: 48px 0;
+  text-align: center;
+}
+footer .cta {
+  font-size: 15px;
+  color: var(--text-muted);
+  margin-bottom: 20px;
+  line-height: 1.6;
+}
+footer .links { justify-content: center; }
+
+/* ── Mobile ── */
+@media (max-width: 600px) {
+  nav { gap: 12px; overflow-x: auto; white-space: nowrap; justify-content: flex-start; }
+  nav a { font-size: 12px; }
+  .hero h1 { font-size: 26px; }
+  .hero { padding-top: calc(var(--nav-h) + 48px); }
+  section { padding: 48px 0; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .stat .num { font-size: 17px; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#methodology">How I Work</a>
+  <a href="#systems">Systems</a>
+  <a href="#mcp">MCP</a>
+  <a href="#opensource">Open Source</a>
+  <a href="#stack">Stack</a>
+</nav>
+
+<div class="container">
+
+  <!-- Hero -->
+  <header class="hero">
+    <h1>Shawn M. Sorrell</h1>
+    <div class="title">Applied AI Engineer</div>
+    <p class="positioning">Applied AI engineer who single-handedly shipped 8 production systems inside a legacy enterprise with no engineering team, no CI/CD, and no code review &mdash; then developed a systematic methodology for making that kind of agent-driven engineering reliable and auditable.</p>
+    <div class="links">
+      <a href="mailto:shawnmsorrell@gmail.com">shawnmsorrell@gmail.com</a>
+      <a href="https://github.com/GodHelpThisCoder">GitHub</a>
+      <a href="https://linkedin.com/in/shawn-sorrell">LinkedIn</a>
+    </div>
+  </header>
+
+  <!-- How I Work -->
+  <section id="methodology">
+    <h2>How I Work: Agent Engineering Methodology</h2>
+    <p style="font-size:14px;color:var(--text-muted);margin-bottom:24px;">The systems below were built by one person with no infrastructure.</p>
+    <p style="font-size:14px;color:var(--text-muted);margin-bottom:24px;">Developed and refined across 310+ agentic sessions, 24,000+ conversation turns, and 4 agent platforms (Claude Code, Amp, Cursor, Gemini). Tool-agnostic practices across every project.</p>
+
+    <div class="stats-grid">
+      <div class="stat"><span class="num">310+</span><span class="label">Sessions</span></div>
+      <div class="stat"><span class="num">24K+</span><span class="label">Turns</span></div>
+      <div class="stat"><span class="num">4</span><span class="label">Platforms</span></div>
+      <div class="stat"><span class="num">13</span><span class="label">AGENTS.md Files</span></div>
+      <div class="stat"><span class="num">53%</span><span class="label">Spec-First</span></div>
+      <div class="stat"><span class="num">7</span><span class="label">Safety Layers</span></div>
+    </div>
+
+    <div class="method-item">
+      <h3>Agent Governance <code>AGENTS.md</code></h3>
+      <p>13 governance documents across 7 projects, evolving from 78-line templates to 465-line specifications with MCP security directives, trust ordering hierarchies, and per-server permission tiers. Agent guidance documents are first-class project artifacts.</p>
+    </div>
+
+    <div class="method-item">
+      <h3>Spec-Driven Development</h3>
+      <p>53% of agentic threads follow a spec-before-implementation pattern. Multi-round QA cycles with reusable audit prompts serve as quality gates &mdash; one project went through 5 sequential QA rounds (75% &rarr; 100%).</p>
+    </div>
+
+    <div class="method-item">
+      <h3>Safety Architecture</h3>
+      <p>7 distinct safety layers: dry-run mode, JSONL audit logging with rotation, two-phase confirmation (single-use tokens + TTL), filesystem kill switch, 6-tier trust ordering, per-MCP-server permission tiers, and supervisor gates. Trust ordering classifies MCP tool output as untrusted data &mdash; a prompt injection defense model.</p>
+    </div>
+
+    <div class="method-item">
+      <h3>Session Architecture</h3>
+      <p>Persistent inter-session state via MEMORY.md and DEVLOG.md with read-first/write-last protocols. Phase-specific session initialization templates. Multi-phase operational workflows designed as structured campaigns.</p>
+    </div>
+
+    <div class="method-item">
+      <h3>Workflow Profile</h3>
+      <p style="font-family:var(--mono);font-size:13px;color:var(--text);margin-bottom:4px;">33% review/audit &middot; 16% spec/design &middot; 11% implementation</p>
+      <p>The agent writes the code; I govern the process.</p>
+    </div>
+  </section>
+
+  <!-- Production Systems -->
+  <section id="systems">
+    <h2>Production Systems</h2>
+    <p style="font-size:14px;color:var(--text-muted);margin-bottom:24px;">Capital Vacations, 2023&ndash;2026. All self-initiated, self-deployed. No engineering team. No dev infrastructure. All currently in production.</p>
+
+    <div class="system">
+      <h3>Document Archive System</h3>
+      <p>Scanner &rarr; OCR classifier &rarr; SOP-compliant filing. Cleared a 3-month backlog in 3 days.</p>
+    </div>
+
+    <div class="system">
+      <h3>Sales Intelligence Dashboard</h3>
+      <p>Power BI + Sheets &rarr; SQLite datamart &rarr; HTTPS dashboard. 20+ daily users.</p>
+      <div class="tech">FastAPI / SQLite / Playwright / React</div>
+    </div>
+
+    <div class="system">
+      <h3>Database Security Audit</h3>
+      <p>Discovered critical dbo-level access across production SQL Server. Documented blast radius, disclosed to CTO/CXO/IT. Converted adversarial situation into remediation partnership.</p>
+    </div>
+
+    <div class="system">
+      <h3>Meeting Intelligence Pipeline</h3>
+      <p>Gemini Flash transcription &rarr; Claude Opus structured notes. In production.</p>
+    </div>
+
+    <div class="system">
+      <h3>Gifting Automation</h3>
+      <p>8 min/tour &rarr; 2 min. Deployed to regional staff.</p>
+    </div>
+
+    <div class="system">
+      <h3>Voyage Manager Adder</h3>
+      <p>Python/pyodbc with mock mode, audit logging, pre-flight checks, explicit transactions.</p>
+    </div>
+
+    <div class="system">
+      <h3>Powerboard</h3>
+      <p>Google Sheets replacing legacy tooling. Daily driver across departments.</p>
+    </div>
+
+    <div class="system">
+      <h3>Profile Puller</h3>
+      <p>Automated guest profile compilation across 4 systems.</p>
+    </div>
+  </section>
+
+  <!-- MCP Servers -->
+  <section id="mcp">
+    <h2>MCP Servers</h2>
+    <p style="font-size:14px;color:var(--text-muted);margin-bottom:20px;">Architecture patterns: two-phase confirmation, JAIL_ROOT security boundaries, audit logging, dry-run modes, AGENTS.md governance.</p>
+
+    <ul class="item-list">
+      <li><strong>superhuman-cli</strong> &mdash; <span>46-tool TypeScript/Bun MCP server for Superhuman email via CDP. 328 tests. 7 safety layers.</span> <a href="https://github.com/GodHelpThisCoder/superhuman-cli">Repo</a></li>
+      <li><strong>PCPartPicker MCP</strong> &mdash; <span>14-tool TypeScript server. 5-round QA cycle, 48-finding documentation audit.</span></li>
+      <li><strong>Amazon MCP</strong> &mdash; <span>9-tool TypeScript server with safety-gated purchase flows.</span></li>
+      <li><strong>Google Drive + Sheets MCP Bridge</strong> &mdash; <span>Two-tier Bun/TypeScript + Apps Script. JAIL_ROOT boundary, supervisor approval, rollback.</span></li>
+      <li><strong>UI Color Extraction MCP</strong> &mdash; <span>Python/Pillow/scikit-learn/OpenCV. k-means + DBSCAN.</span></li>
+    </ul>
+  </section>
+
+  <!-- Open Source -->
+  <section id="opensource">
+    <h2>Open Source &amp; Learning</h2>
+    <ul class="item-list">
+      <li><strong>Eubathron</strong> &mdash; <span>AI tutoring system for 49 ML/robotics papers at 5 reading levels. 200+ spec files.</span></li>
+      <li><strong>Ilya List</strong> &mdash; <span>React 19/D3.js curriculum portal with DAG prerequisite mapping.</span></li>
+      <li><strong>Community Migration</strong> &mdash; <span>Discord &rarr; self-hosted Matrix (Synapse) on Hetzner Cloud. 465-line AGENTS.md with trust ordering hierarchy.</span></li>
+    </ul>
+  </section>
+
+  <!-- Stack -->
+  <section id="stack">
+    <h2>Stack</h2>
+
+    <div class="stack-category">
+      <h3>Languages</h3>
+      <div class="pills">
+        <span class="pill">TypeScript</span>
+        <span class="pill">Python</span>
+        <span class="pill">SQL</span>
+        <span class="pill">Bash</span>
+      </div>
+    </div>
+
+    <div class="stack-category">
+      <h3>AI / ML</h3>
+      <div class="pills">
+        <span class="pill">Claude API</span>
+        <span class="pill">Gemini API</span>
+        <span class="pill">MCP Protocol</span>
+        <span class="pill">OpenVINO / ONNX</span>
+        <span class="pill">OCR Pipelines</span>
+      </div>
+    </div>
+
+    <div class="stack-category">
+      <h3>Agent Platforms</h3>
+      <div class="pills">
+        <span class="pill">Claude Code (Opus)</span>
+        <span class="pill">Amp</span>
+        <span class="pill">Cursor</span>
+        <span class="pill">Gemini</span>
+      </div>
+    </div>
+
+    <div class="stack-category">
+      <h3>Web</h3>
+      <div class="pills">
+        <span class="pill">React 19</span>
+        <span class="pill">FastAPI</span>
+        <span class="pill">Bun</span>
+        <span class="pill">Vite</span>
+        <span class="pill">D3.js</span>
+        <span class="pill">Tailwind</span>
+        <span class="pill">Playwright</span>
+      </div>
+    </div>
+
+    <div class="stack-category">
+      <h3>Data</h3>
+      <div class="pills">
+        <span class="pill">SQLite</span>
+        <span class="pill">SQL Server</span>
+        <span class="pill">Google Sheets API</span>
+        <span class="pill">Power BI</span>
+      </div>
+    </div>
+
+    <div class="stack-category">
+      <h3>Infra</h3>
+      <div class="pills">
+        <span class="pill">Docker</span>
+        <span class="pill">Ansible</span>
+        <span class="pill">Traefik</span>
+        <span class="pill">Tailscale</span>
+        <span class="pill">Hetzner Cloud</span>
+        <span class="pill">Matrix / Synapse</span>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <p class="cta">Open to applied AI / forward-deployed engineering roles. Remote or relocation.</p>
+    <div class="links">
+      <a href="mailto:shawnmsorrell@gmail.com">Email</a>
+      <a href="https://github.com/GodHelpThisCoder">GitHub</a>
+      <a href="https://linkedin.com/in/shawn-sorrell">LinkedIn</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
